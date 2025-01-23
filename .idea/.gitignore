@@ -3,6 +3,7 @@
 /workspace.xml
 /cmake-build-debug/
 /build/
+/render.sh
 # Editor-based HTTP Client requests
 /httpRequests/
 # Datasource local storage ignored files
