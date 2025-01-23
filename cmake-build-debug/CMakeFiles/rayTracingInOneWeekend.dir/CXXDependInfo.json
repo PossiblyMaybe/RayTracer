@@ -1,0 +1,18 @@
+{
+	"bmi-installation" : null,
+	"compiler-frontend-variant" : "GNU",
+	"compiler-id" : "GNU",
+	"compiler-simulate-id" : "",
+	"config" : "Debug",
+	"cxx-modules" : {},
+	"dir-cur-bld" : "/home/will/CLionProjects/rayTracer/cmake-build-debug",
+	"dir-cur-src" : "/home/will/CLionProjects/rayTracer",
+	"dir-top-bld" : "/home/will/CLionProjects/rayTracer/cmake-build-debug",
+	"dir-top-src" : "/home/will/CLionProjects/rayTracer",
+	"exports" : [],
+	"forward-modules-from-target-dirs" : [],
+	"include-dirs" : [],
+	"language" : "CXX",
+	"linked-target-dirs" : [],
+	"module-dir" : "/home/will/CLionProjects/rayTracer/cmake-build-debug/CMakeFiles/rayTracingInOneWeekend.dir"
+}
