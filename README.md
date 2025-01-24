@@ -1,2 +1,7 @@
 # Ray Tracer
-ray tracer I made, I build the base by following the Ray Tracing in One Weekend tutorial, but I decided to figure out how to implement more stuff myself after that
+I made this ray tracer by first following the Ray Tracing in One Weekend tutorial (https://raytracing.github.io/books/RayTracingInOneWeekend.html), then decided to implement more functionality myself using the code from the tutorial as a base.
+
+So far I have added:
+- Emmisive materials
+- Triangles (still requires work atm)
+
