@@ -8,7 +8,6 @@ add_executable(rayTracer main.cpp
         headers/colour.h
         headers/ray.h
         headers/hittable.h
-        headers/shapes.h
         headers/hittable_list.h
         headers/rt_weekend.h
         headers/interval.h

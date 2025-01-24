@@ -16,11 +16,11 @@ public:
 
     hittable_list() = default;
 
-    explicit hittable_list(shared_ptr<hittable> object) { add(object); }
+    explicit hittable_list(const shared_ptr<hittable> &object) { add(object); }
 
     void clear() { objects.clear(); }
 
-    void add(shared_ptr<hittable> object) {
+    void add(const shared_ptr<hittable>& object) {
         objects.push_back(object);
     }
 

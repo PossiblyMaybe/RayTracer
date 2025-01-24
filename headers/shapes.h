@@ -9,11 +9,6 @@
 
 #include "hittable.h"
 
-struct Vertex {
-    point3 pos[3];
-};
-
-
 class sphere : public hittable {
 public:
     sphere(const point3 &center, double radius, shared_ptr<material> mat) : center(center),
@@ -47,27 +42,72 @@ public:
         return true;
     }
 
+    vec3 normal;
+
 private:
     point3 center;
     double radius;
     shared_ptr<material> mat;
 };
 
+struct Vertex {
+    point3 pos;
+
+    explicit Vertex(const point3 &pos): pos(pos) {
+    }
+};
+
+
 class triangle : public hittable {
 public:
     point3 pos;
-    explicit triangle(const Vertex vertices[3],const point3& pos) : pos(pos) {
-        // vertices are local coordinates, will require view transformation to place into the world
-        this->vertices[0] = vertices[0];
-        this->vertices[1] = vertices[1];
-        this->vertices[2] = vertices[2];
+
+    explicit triangle(Vertex vertices[3], const point3 &pos, const shared_ptr<material> &mat) : vertices(vertices[0],
+            vertices[1], vertices[2]),
+        pos(pos), mat(mat),
+        normal(cross(vertices[1].pos - vertices[0].pos, vertices[2].pos - vertices[0].pos)) {
     }
 
+    bool hit(const ray &r, interval ray_t, hit_record &rec) const override {
+        // standard linear algebra to find t:
+        // used n.r = n.a to find it, it's written down on my obsidian
 
+        double rn = dot(normal, vertices[0].pos);
+        double qn = dot(r.origin(), normal);
+        double dn = std::abs(dot(r.direction(), normal));
+
+        double t = (qn - rn) / dn;
+
+
+        if (!ray_t.surrounds(t)) return false;
+        rec.p = r.at(t);
+
+        double total_area = get_area(vertices[0].pos, vertices[1].pos, vertices[2].pos);
+
+        double area_sum = get_area(vertices[0].pos, vertices[1].pos, rec.p)
+                          + get_area(vertices[0].pos, vertices[2].pos, rec.p)
+                          + get_area(vertices[1].pos, vertices[2].pos, rec.p);
+
+        if (total_area != area_sum) return false;
+
+        rec.t = t;
+        rec.set_face_normal(r, normal);
+        rec.mat = mat;
+        return true;
+    }
 
 private:
+    vec3 normal;
     Vertex vertices[3];
+    shared_ptr<material> mat;
+
+    [[nodiscard]] static double get_area(point3 a, point3 b, point3 c) {
+        vec3 AB = b - a;
+        vec3 AC = c - a;
+        return cross(AB, AC).length() / 2;
+    }
 };
 
+#include "rt_weekend.h"
 
 #endif //SPHERE_H

@@ -55,6 +55,10 @@ public:
         return std::fabs(e[0]) < s && std::fabs(e[1]) < s && std::fabs(e[2]) < s;
     }
 
+    [[nodiscard]] double sum_vec() const {
+        return e[0] + e[1] + e[2];
+    }
+
     static vec3 random() {
         return {random_double(), random_double(), random_double()};
     }
@@ -113,8 +117,8 @@ inline vec3 unit_vector(const vec3 &v) {
 }
 
 inline vec3 random_in_unit_disk() {
-    while(true) {
-        auto p = vec3(random_double(-1,1),random_double(-1,1),0);
+    while (true) {
+        auto p = vec3(random_double(-1, 1), random_double(-1, 1), 0);
         if (p.length_squared() < 1)
             return p;
     }

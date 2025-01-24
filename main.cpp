@@ -13,29 +13,33 @@ int main() {
     hittable_list world;
 
 
-    auto ground_material = make_shared<lambertian>(colour(0.2, 0.4, 0.6));
-    world.add(make_shared<sphere>(point3(0, -100.5, -1), 100, ground_material));
+    auto mirror_material = make_shared<metal>(colour(0.2, 0.4, 0.6),0.0);
 
-    auto emissive_mat = make_shared<emissive>(50, colour(1, 0.6, 0.4));
-    world.add(make_shared<sphere>(point3(1.5, 0, -1), 0.1, emissive_mat));
+    Vertex vertices[3] = {
+        Vertex({0, std::sqrt(3) / 2, -1}),
+        Vertex({-1, -std::sqrt(3) / 2, -1}),
+        Vertex({1, -std::sqrt(3) / 2, -1})
+    };
 
-    auto mirror_mat = make_shared<metal>(colour(1.0, 1.0, 1.0), 0.1);
-    world.add(make_shared<sphere>(point3(0, 0, -1), 0.5, mirror_mat));
+    world.add(make_shared<triangle>(vertices, point3(0, 0, -1), mirror_material));
+
+    auto ground= make_shared<lambertian>(colour(0,0,0));
+    world.add(make_shared<sphere>(point3(0,-100.5,-1),100,ground));
 
     camera cam;
 
     cam.aspect_ratio = 16.0 / 9.0;
-    cam.image_width = 400;
+    cam.image_width = 800;
     cam.samples_per_pixel = 100;
     cam.max_depth = 50;
 
     cam.vfov = 60.0;
-    cam.lookfrom = point3(0, 0, 1);
+    cam.lookfrom = point3(0, 1, 1);
     cam.lookat = point3(0, 0, -1);
     cam.vup = vec3(0, 1, 0);
 
     cam.defocus_angle = 5.0;
-    cam.focus_dist = 2.0;
+    cam.focus_dist = std::sqrt(3);
 
     cam.render(world);
 }
