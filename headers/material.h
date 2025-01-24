@@ -7,10 +7,13 @@
 
 #include "hittable.h"
 
+
 class material {
+    // Base class for materials that light rays can interact with
 public:
     virtual ~material() = default;
 
+    // Returns false if the material will not scatter and true if it will
     virtual bool scatter(const ray &r, const hit_record &rec, colour &attenuation, ray &scattered) const {
         return false;
     }
